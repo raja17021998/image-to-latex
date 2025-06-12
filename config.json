@@ -1,0 +1,67 @@
+{
+    "paths": {
+      "train_csv_path_hw": "/home/pooja/shashwat/latex-project/HandwrittenData/train_hw.csv",
+      "train_image_dir_hw": "/home/pooja/shashwat/latex-project/HandwrittenData/images/train",
+
+      "train_csv_path_syn": "/home/pooja/shashwat/latex-project/SyntheticData/train.csv",
+      "val_csv_path_syn": "/home/pooja/shashwat/latex-project/SyntheticData/val.csv",
+      "test_csv_path_syn": "/home/pooja/shashwat/latex-project/SyntheticData/test.csv",
+
+      "train_image_dir_syn": "/home/pooja/shashwat/latex-project/SyntheticData/images",
+
+
+      "model_save_path": "best_model.pth",
+      "inference_save_path": "inference_results.csv",
+      "vocab_file_path":"vocab.json",
+
+      "vocab_w2idx_hw":"vocab_w2idx_hw.json",
+      "vocab_idx2w_hw":"vocab_idx2w_hw.json",
+
+      "vocab_w2idx_syn":"vocab_w2idx_syn.json",
+      "vocab_idx2w_syn":"vocab_idx2w_syn.json"
+    },
+    "hyperparameters": {
+      "embedding_dim": 128,
+      "hidden_dim": 128,
+      "vocab_size": "set dynamically based on vocab_dict",
+      "num_layers": 1,
+      "batch_size": 128,
+      "learning_rate": 1e-3,
+      "num_epochs": 60,
+      "teacher_forcing_ratio": 0.6,
+      "beam_width": 3,
+      "max_caption_length": 200,
+      "min_freq": 1
+    },
+    "device": "cuda",
+    "optimizer": {
+      "type": "Adam",
+      "learning_rate": 1e-3
+    },
+    "loss_function": {
+      "type": "CrossEntropyLoss",
+      "ignore_index": 0 
+    },
+    "model": {
+      "encoder": {
+        "type": "ResNet18Encoder",
+        "pretrained": true,
+        "output_dim": 128
+      },
+      "decoder": {
+        "type": "BiLSTMDecoder",
+        "embedding_dim": 128,
+        "hidden_dim": 128,
+        "bidirectional": true
+      }
+    },
+    "transformations": {
+      "resize": [224, 224],
+      "to_tensor": true
+    },
+    "evaluation": {
+      "metrics": ["BLEU", "CHRF2"],
+      "beam_search": true
+    }
+  }
+  
